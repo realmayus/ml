@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello wasm-pack!</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    <div id="canvases">
+      <canvas id="canvas"></canvas>
+      <div id="chart-container">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <button id="reset" onclick="resetCanvas()">Reset</button>
+
+    <script src="./bootstrap.js"></script>
+    <script>
+      function resetCanvas() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = 20;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "white";
+      }
+    </script>
+  </body>
+  <style>
+    #canvases {
+      display: flex;
+      width: 100vw;
+      flex-grow: 0;
+    }
+    #canvas {
+      width: 500px;
+      height: 500px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+    #chart-container {
+      width: 500px;
+      height: 500px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+  </style>
+</html>
