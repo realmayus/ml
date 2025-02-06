@@ -86,12 +86,13 @@ pub fn train() {
         (label, svc)
     }).collect::<HashMap<u8, Svm>>();
 
+    let serialized = serde_json::to_string(&predictors).unwrap();
+    let onevsall = OneVsAllSvm::from_models(predictors);
     // compute total accuracy by using max_prediction()
-    let correct = test_data.iter().zip(test_labels.iter()).filter(|(data, exp_label)| max_prediction(data, &predictors) == **exp_label).count();
+    let correct = test_data.iter().zip(test_labels.iter()).filter(|(data, exp_label)| onevsall.predict(data).0 == **exp_label).count();
     println!("Total accuracy: {}", correct as f64 / test_data.len() as f64);
 
     // serialize SVCs as a single json file
-    let serialized = serde_json::to_string(&predictors).unwrap();
     std::fs::write("data/models.json", serialized).unwrap();
 }
 
